@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 21 Maj 2020, 19:14
+-- Czas generowania: 23 Maj 2020, 18:29
 -- Wersja serwera: 10.4.11-MariaDB
 -- Wersja PHP: 7.4.3
 
@@ -40,6 +40,13 @@ CREATE TABLE `animal` (
   `owner_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Zrzut danych tabeli `animal`
+--
+
+INSERT INTO `animal` (`animal_id`, `name`, `sex`, `birth_date`, `species`, `breed`, `color`, `fur`, `owner_id`) VALUES
+(1, 'Reksio', 'Male', '0000-00-00', 'Pies', 'Labrador Retriever', 'Brązowy', 'Jednokolorowe', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -50,6 +57,13 @@ CREATE TABLE `animal_appointment` (
   `animal_id` int(11) NOT NULL,
   `appointment_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Zrzut danych tabeli `animal_appointment`
+--
+
+INSERT INTO `animal_appointment` (`animal_id`, `appointment_id`) VALUES
+(1, 1);
 
 -- --------------------------------------------------------
 
@@ -64,6 +78,13 @@ CREATE TABLE `animal_diagnosis` (
   `diagnosis_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Zrzut danych tabeli `animal_diagnosis`
+--
+
+INSERT INTO `animal_diagnosis` (`animal_diagnosis_id`, `regimen`, `appointment_id`, `diagnosis_id`) VALUES
+(1, 'Regularna, zdrowa dieta.', 1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -76,6 +97,13 @@ CREATE TABLE `appointment` (
   `time` time NOT NULL,
   `veterinarian_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Zrzut danych tabeli `appointment`
+--
+
+INSERT INTO `appointment` (`appointment_id`, `data`, `time`, `veterinarian_id`) VALUES
+(1, '2020-05-23', '15:20:00', 1);
 
 -- --------------------------------------------------------
 
@@ -126,6 +154,22 @@ CREATE TABLE `drug` (
   `drug_name` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Zrzut danych tabeli `drug`
+--
+
+INSERT INTO `drug` (`drug_id`, `drug_name`) VALUES
+(1, 'Antybiotyk'),
+(2, 'Witaminy'),
+(3, 'Suplementy diety'),
+(4, 'Krople'),
+(5, 'Maść'),
+(6, 'Kroplówka z glukozą i aminokwasami'),
+(7, 'Kroplówla z elektrolitami'),
+(8, 'Leki osłaniające błonę śluzową żołądka'),
+(9, 'Surowica przeciwwirusowa'),
+(10, 'Zastrzyki');
+
 -- --------------------------------------------------------
 
 --
@@ -138,6 +182,17 @@ CREATE TABLE `drug_plan` (
   `advices` varchar(255) DEFAULT NULL,
   `drug_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Zrzut danych tabeli `drug_plan`
+--
+
+INSERT INTO `drug_plan` (`drug_plan_id`, `diagnosis_id`, `advices`, `drug_id`) VALUES
+(1, 1, 'Zalecane natychmiastowe wykonanie badań krwi.', 9),
+(2, 1, 'Stosowanie: dwa razy dziennie (dodawane do posiłku) przez najbliższy tydzień. Później konsultacja kontrolna.', 1),
+(3, 3, 'Skierowanie na natychmiastową hospitalizację.', 10),
+(4, 12, 'Suplementacja: 2 razy w tygodniu przez następny miesiąc.', 3),
+(5, 14, 'Stosowanie: zakraplać uszy 2 razy dziennie, rano oraz wieczorem.', 4);
 
 -- --------------------------------------------------------
 
@@ -298,13 +353,13 @@ ALTER TABLE `veterinarian`
 -- AUTO_INCREMENT dla tabeli `animal`
 --
 ALTER TABLE `animal`
-  MODIFY `animal_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `animal_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT dla tabeli `animal_diagnosis`
 --
 ALTER TABLE `animal_diagnosis`
-  MODIFY `animal_diagnosis_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `animal_diagnosis_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT dla tabeli `diagnosis`
