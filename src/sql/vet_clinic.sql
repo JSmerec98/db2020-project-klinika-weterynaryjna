@@ -2,8 +2,8 @@
 -- version 5.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Czas generowania: 23 Maj 2020, 18:29
+-- Host: localhost
+-- Czas generowania: 25 Maj 2020, 15:12
 -- Wersja serwera: 10.4.11-MariaDB
 -- Wersja PHP: 7.4.3
 
@@ -45,25 +45,36 @@ CREATE TABLE `animal` (
 --
 
 INSERT INTO `animal` (`animal_id`, `name`, `sex`, `birth_date`, `species`, `breed`, `color`, `fur`, `owner_id`) VALUES
-(1, 'Reksio', 'Male', '0000-00-00', 'Pies', 'Labrador Retriever', 'Brązowy', 'Jednokolorowe', 1);
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `animal_appointment`
---
-
-CREATE TABLE `animal_appointment` (
-  `animal_id` int(11) NOT NULL,
-  `appointment_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Zrzut danych tabeli `animal_appointment`
---
-
-INSERT INTO `animal_appointment` (`animal_id`, `appointment_id`) VALUES
-(1, 1);
+(1, 'Reksio', 'Male', '2010-04-12', 'Pies', 'Labrador Retriever', 'Brązowy', 'Jednokolorowe', 1),
+(2, 'Burek', 'Male', '2012-02-24', 'Pies', 'Labrador Retriever', 'Kremowy', 'Jednokolorowe', 1),
+(3, 'Bambi', 'Female', '2011-02-14', 'Kot', 'Kot Syjamski', 'Beżowo-Czarny', 'Mieszane', 2),
+(4, 'Pusia', 'Female', '2011-05-17', 'Pies', 'Husky Syberyjski', 'Szaro-Czarny', 'Mieszane', 3),
+(5, 'Baks', 'Male', '2013-06-12', 'Królik', 'Belgijski Olbrzym', 'Szary', 'Jednokolorowe', 3),
+(6, 'Puszek', 'Male', '2014-08-06', 'Kot', 'Kot Bengalski', 'Pomarańczowo-Czarny', 'Cętkowane', 3),
+(7, 'Bomba', 'Female', '2015-05-22', 'Pies', 'Golden Retriever', 'Ciemnozłoty', 'Jednokolorowe', 4),
+(8, 'Barry', 'Male', '2012-05-22', 'Pies', 'Buldog Angielski', 'Brązowy', 'Jednokolorowe', 5),
+(9, 'Piorun', 'Male', '2016-10-21', 'Królik', 'Olbrzym Srokacz', 'Czarno-Biały', 'Plamiste', 6),
+(10, 'Bąbel', 'Male', '2018-12-21', 'Pies', 'Mieszaniec', 'Bury', 'Jednokolorowe', 7),
+(11, 'Leon', 'Male', '2019-02-19', 'Chomik', 'Chomik Syryjski', 'Brązowy', 'Jednokolorowe', 7),
+(12, 'Amor', 'Male', '2012-03-21', 'Pies', 'Shiba', 'Biały', 'Jednokolorowe', 8),
+(13, 'Grot', 'Male', '2012-07-27', 'Koń', 'Mustang', 'Czarny', 'Jednokolorowe', 9),
+(14, 'Buba', 'Female', '2013-10-18', 'Kot', 'Szkocki Zwisłouchy', 'Szary', 'Jednokolorowe', 10),
+(15, 'Abba', 'Female', '2015-12-18', 'Kot', 'Himalayan', 'Czarno-Bury', 'Mieszane', 11),
+(16, 'Ramzes', 'Male', '2018-08-15', 'Królik', 'Francuski Baran', 'Czarny', 'Jednokolorowe', 11),
+(17, 'Tajson', 'Male', '2013-07-08', 'Koń', 'Koń Pełnej Krwi Angielskiej', 'Brązowo-Biały', 'Mieszane', 12),
+(18, 'Bajka', 'Female', '2011-10-19', 'Pies', 'Rottweiler', 'Czarno-Brązowy', 'Mieszane', 13),
+(19, 'Borys', 'Male', '2012-08-16', 'Królik', 'Królik Kalifornijski', 'Biało-Czarny', 'Mieszane', 13),
+(20, 'Dalia', 'Female', '2013-06-17', 'Kot', 'Kot Kartuski', 'Szary', 'Jednokolorowe', 14),
+(21, 'Ozyrys', 'Male', '2019-03-08', 'Pies', 'Jamnik', 'Brązowy', 'Jednokolorowe', 15),
+(22, 'Benji', 'Female', '2011-05-09', 'Koń', 'Kuc Szetlandzki', 'Biało-Brązowy', 'Mieszane', 16),
+(23, 'Profesor', 'Male', '2013-03-22', 'Królik', 'Mały Baran', 'Brązowo-Szary', 'Mieszane', 17),
+(24, 'Emi', 'Female', '2013-12-04', 'Pies', 'Border Collie', 'Czarno-Biały', 'Miesznae', 17),
+(25, 'Fafik', 'Male', '2014-11-11', 'Pies', 'Cocker Spaniel Angielski', 'Złoty', 'Jednokolorowe', 18),
+(26, 'Brutus', 'Male', '2016-02-19', 'Królik', 'Szynszyl Wielki', 'Szary', 'Jednokolorowe', 19),
+(27, 'Mickey', 'Male', '2010-07-22', 'Koń', 'Tinker', 'Brązowo-Biały', 'Mieszane', 19),
+(28, 'Maestro', 'Male', '2015-10-15', 'Pies', 'Samojed', 'Biały', 'Jednokolorowe', 19),
+(29, 'Piorun', 'Male', '2019-01-02', 'Kot', 'Kot Balijski', 'Biało-Brązowy', 'Mieszane', 19),
+(30, 'Amber', 'Female', '2020-03-18', 'Pies', 'Labrador Retriever', 'Czarny', 'Jednokolorowe', 20);
 
 -- --------------------------------------------------------
 
@@ -83,7 +94,16 @@ CREATE TABLE `animal_diagnosis` (
 --
 
 INSERT INTO `animal_diagnosis` (`animal_diagnosis_id`, `regimen`, `appointment_id`, `diagnosis_id`) VALUES
-(1, 'Regularna, zdrowa dieta.', 1, 1);
+(1, 'Zalecany kołnierz ochronny', 3, 5),
+(2, 'Zalecane ograniczenie spacerów oraz kontakt z innymi zwięrzętami', 1, 10),
+(3, 'Zaleca się całowity zakaraz wyjadu konia z terenu stajni', 6, 5),
+(4, 'Zalecany kołnierz ochronny oraz ogarniczenie spacerów na mrozie', 24, 14),
+(5, 'Zalecane ograniczenie spacerów oraz kontakt z innymi zwięrzętami', 7, 10),
+(6, 'Zalecany kołnierz ochronny oraz ogarniczenie spacerów na mrozie', 14, 7),
+(7, 'Zalecane ograniczenie spacerów oraz kontakt z innymi zwięrzętami', 14, 10),
+(8, 'Zalecane pozostawienie w klinice do czasu operacji', 4, 3),
+(9, 'Zaleca się całowity zakaraz wyjadu konia z terenu stajni', 6, 3),
+(10, 'Zalecany krople do oczu', 19, 4);
 
 -- --------------------------------------------------------
 
@@ -95,15 +115,39 @@ CREATE TABLE `appointment` (
   `appointment_id` int(11) NOT NULL,
   `data` date NOT NULL,
   `time` time NOT NULL,
-  `veterinarian_id` int(11) NOT NULL
+  `veterinarian_id` int(11) NOT NULL,
+  `animal_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Zrzut danych tabeli `appointment`
 --
 
-INSERT INTO `appointment` (`appointment_id`, `data`, `time`, `veterinarian_id`) VALUES
-(1, '2020-05-23', '15:20:00', 1);
+INSERT INTO `appointment` (`appointment_id`, `data`, `time`, `veterinarian_id`, `animal_id`) VALUES
+(1, '2020-07-01', '10:00:00', 1, 2),
+(2, '2020-07-01', '12:00:00', 1, 4),
+(3, '2020-07-01', '14:00:00', 1, 17),
+(4, '2020-07-01', '16:00:00', 1, 23),
+(5, '2020-07-02', '10:00:00', 2, 13),
+(6, '2020-07-02', '12:00:00', 2, 5),
+(7, '2020-07-02', '14:00:00', 2, 8),
+(8, '2020-07-02', '16:00:00', 2, 14),
+(9, '2020-07-03', '10:00:00', 3, 26),
+(10, '2020-07-03', '12:00:00', 3, 1),
+(11, '2020-07-03', '14:00:00', 3, 15),
+(12, '2020-07-03', '16:00:00', 3, 2),
+(13, '2020-07-04', '10:00:00', 4, 6),
+(14, '2020-07-04', '12:00:00', 4, 21),
+(15, '2020-07-04', '14:00:00', 4, 9),
+(16, '2020-07-04', '16:00:00', 4, 20),
+(17, '2020-07-05', '10:00:00', 5, 7),
+(18, '2020-07-05', '12:00:00', 5, 11),
+(19, '2020-07-05', '14:00:00', 5, 19),
+(20, '2020-07-05', '16:00:00', 5, 12),
+(21, '2020-07-06', '10:00:00', 6, 16),
+(22, '2020-07-06', '12:00:00', 6, 27),
+(23, '2020-07-06', '14:00:00', 6, 30),
+(24, '2020-07-06', '16:00:00', 6, 24);
 
 -- --------------------------------------------------------
 
@@ -246,6 +290,24 @@ CREATE TABLE `prescription` (
   `drug_plan_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Zrzut danych tabeli `prescription`
+--
+
+INSERT INTO `prescription` (`perscription_id`, `veterinarian_id`, `drug_plan_id`) VALUES
+(1, 1, 1),
+(2, 1, 3),
+(3, 2, 5),
+(4, 2, 2),
+(5, 3, 1),
+(6, 3, 2),
+(7, 4, 2),
+(8, 4, 4),
+(9, 5, 3),
+(10, 5, 5),
+(11, 6, 2),
+(12, 6, 3);
+
 -- --------------------------------------------------------
 
 --
@@ -284,13 +346,6 @@ ALTER TABLE `animal`
   ADD KEY `owner_id` (`owner_id`);
 
 --
--- Indeksy dla tabeli `animal_appointment`
---
-ALTER TABLE `animal_appointment`
-  ADD KEY `animal_id` (`animal_id`),
-  ADD KEY `appointment_id` (`appointment_id`);
-
---
 -- Indeksy dla tabeli `animal_diagnosis`
 --
 ALTER TABLE `animal_diagnosis`
@@ -303,7 +358,8 @@ ALTER TABLE `animal_diagnosis`
 --
 ALTER TABLE `appointment`
   ADD PRIMARY KEY (`appointment_id`),
-  ADD KEY `veterinarian_id` (`veterinarian_id`);
+  ADD KEY `veterinarian_id` (`veterinarian_id`),
+  ADD KEY `animal_pk` (`animal_id`);
 
 --
 -- Indeksy dla tabeli `diagnosis`
@@ -353,13 +409,13 @@ ALTER TABLE `veterinarian`
 -- AUTO_INCREMENT dla tabeli `animal`
 --
 ALTER TABLE `animal`
-  MODIFY `animal_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `animal_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT dla tabeli `animal_diagnosis`
 --
 ALTER TABLE `animal_diagnosis`
-  MODIFY `animal_diagnosis_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `animal_diagnosis_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT dla tabeli `diagnosis`
@@ -384,13 +440,6 @@ ALTER TABLE `animal`
   ADD CONSTRAINT `animal_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `owner` (`owner_id`);
 
 --
--- Ograniczenia dla tabeli `animal_appointment`
---
-ALTER TABLE `animal_appointment`
-  ADD CONSTRAINT `animal_appointment_ibfk_1` FOREIGN KEY (`animal_id`) REFERENCES `animal` (`animal_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `animal_appointment_ibfk_2` FOREIGN KEY (`appointment_id`) REFERENCES `appointment` (`appointment_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Ograniczenia dla tabeli `animal_diagnosis`
 --
 ALTER TABLE `animal_diagnosis`
@@ -401,6 +450,7 @@ ALTER TABLE `animal_diagnosis`
 -- Ograniczenia dla tabeli `appointment`
 --
 ALTER TABLE `appointment`
+  ADD CONSTRAINT `animal_pk` FOREIGN KEY (`animal_id`) REFERENCES `animal` (`animal_id`),
   ADD CONSTRAINT `appointment_ibfk_1` FOREIGN KEY (`veterinarian_id`) REFERENCES `veterinarian` (`veterinarian_id`);
 
 --
