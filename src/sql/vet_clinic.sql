@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Czas generowania: 25 Maj 2020, 15:12
+-- Czas generowania: 27 Maj 2020, 13:41
 -- Wersja serwera: 10.4.11-MariaDB
 -- Wersja PHP: 7.4.3
 
@@ -418,16 +418,46 @@ ALTER TABLE `animal_diagnosis`
   MODIFY `animal_diagnosis_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
+-- AUTO_INCREMENT dla tabeli `appointment`
+--
+ALTER TABLE `appointment`
+  MODIFY `appointment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
 -- AUTO_INCREMENT dla tabeli `diagnosis`
 --
 ALTER TABLE `diagnosis`
   MODIFY `diagnosis_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
+-- AUTO_INCREMENT dla tabeli `drug`
+--
+ALTER TABLE `drug`
+  MODIFY `drug_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT dla tabeli `drug_plan`
+--
+ALTER TABLE `drug_plan`
+  MODIFY `drug_plan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT dla tabeli `owner`
 --
 ALTER TABLE `owner`
   MODIFY `owner_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT dla tabeli `prescription`
+--
+ALTER TABLE `prescription`
+  MODIFY `perscription_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT dla tabeli `veterinarian`
+--
+ALTER TABLE `veterinarian`
+  MODIFY `veterinarian_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Ograniczenia dla zrzutów tabel
@@ -443,8 +473,8 @@ ALTER TABLE `animal`
 -- Ograniczenia dla tabeli `animal_diagnosis`
 --
 ALTER TABLE `animal_diagnosis`
-  ADD CONSTRAINT `animal_diagnosis_ibfk_1` FOREIGN KEY (`appointment_id`) REFERENCES `appointment` (`appointment_id`),
-  ADD CONSTRAINT `animal_diagnosis_ibfk_2` FOREIGN KEY (`diagnosis_id`) REFERENCES `diagnosis` (`diagnosis_id`);
+  ADD CONSTRAINT `animal_diagnosis_ibfk_2` FOREIGN KEY (`diagnosis_id`) REFERENCES `diagnosis` (`diagnosis_id`),
+  ADD CONSTRAINT `animal_diagnosis_ibfk_3` FOREIGN KEY (`appointment_id`) REFERENCES `appointment` (`appointment_id`);
 
 --
 -- Ograniczenia dla tabeli `appointment`
@@ -464,8 +494,8 @@ ALTER TABLE `drug_plan`
 -- Ograniczenia dla tabeli `prescription`
 --
 ALTER TABLE `prescription`
-  ADD CONSTRAINT `prescription_ibfk_1` FOREIGN KEY (`veterinarian_id`) REFERENCES `veterinarian` (`veterinarian_id`),
-  ADD CONSTRAINT `prescription_ibfk_2` FOREIGN KEY (`drug_plan_id`) REFERENCES `drug_plan` (`drug_plan_id`);
+  ADD CONSTRAINT `prescription_ibfk_2` FOREIGN KEY (`drug_plan_id`) REFERENCES `drug_plan` (`drug_plan_id`),
+  ADD CONSTRAINT `prescription_ibfk_3` FOREIGN KEY (`veterinarian_id`) REFERENCES `veterinarian` (`veterinarian_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
