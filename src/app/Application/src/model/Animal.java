@@ -9,6 +9,7 @@ public class Animal {
     String sex;
     Date birth_date;
     String species;
+    String breed;
     String color;
     String fur;
     int owner_id;
@@ -75,5 +76,13 @@ public class Animal {
 
     public void setOwner_id(int owner_id) {
         this.owner_id = owner_id;
+    }
+
+    public String getBreed() {
+        return breed;
+    }
+
+    public void setBreed(String breed) {
+        this.breed = breed;
     }
 }
