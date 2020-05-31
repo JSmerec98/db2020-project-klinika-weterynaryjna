@@ -7,10 +7,14 @@ Tematem projektu jest zaproponowana przez nas "Klinika weterynaryjna".
 | Smerecki Jan    | WIMiIP  | IS       |   4     | 3     | 2019/2020      |
 
 ## Projekt bazy danych
-Schemat bazy danych:
+
+### Schemat bazy danych:
 ![diagram-erd](Vet_Clinic.svg)
 
-### Przykładowe zapytania z grupy DDL
+### Przykładowe zapytania z grupy DDL:
+
+Utworzenie tabeli "animal":
+
 ```sql
 CREATE TABLE `animal` (
   `animal_id` int(11) NOT NULL,
@@ -23,7 +27,11 @@ CREATE TABLE `animal` (
   `fur` varchar(50) DEFAULT NULL,
   `owner_id` int(11) NOT NULL
 );
+```
 
+Utworzenie tabeli "appointment":
+
+```sql
 CREATE TABLE `appointment` (
   `appointment_id` int(11) NOT NULL,
   `data` date NOT NULL,
@@ -31,14 +39,21 @@ CREATE TABLE `appointment` (
   `veterinarian_id` int(11) NOT NULL,
   `animal_id` int(11) NOT NULL
 );
+```
 
+Utworzenie tabeli "animal_diagnosis":
+
+```sql
 CREATE TABLE `animal_diagnosis` (
   `animal_diagnosis_id` int(11) NOT NULL,
   `regimen` varchar(255) DEFAULT NULL,
   `appointment_id` int(11) NOT NULL,
   `diagnosis_id` int(11) NOT NULL
 );
+```
+Utworzenie tabeli "veterinarian":
 
+```sql
 CREATE TABLE `veterinarian` (
   `veterinarian_id` int(11) NOT NULL,
   `first_name` varchar(50) NOT NULL,
@@ -47,6 +62,30 @@ CREATE TABLE `veterinarian` (
   `phone_number` int(9) NOT NULL
 );
 ```
+Modyfikacja tabeli "prescription" - dodanie kluczy:
+
+```sql
+ALTER TABLE `prescription`
+  ADD PRIMARY KEY (`perscription_id`),
+  ADD KEY `veterinarian_id` (`veterinarian_id`),
+  ADD KEY `drug_plan_id` (`drug_plan_id`);
+```
+
+Modyfikacja tabeli "animal_diagnosis" - dodanie ograniczeń:
+
+```sql
+ALTER TABLE `animal_diagnosis`
+  ADD CONSTRAINT `animal_diagnosis_ibfk_2` FOREIGN KEY (`diagnosis_id`) REFERENCES `diagnosis` (`diagnosis_id`),
+  ADD CONSTRAINT `animal_diagnosis_ibfk_3` FOREIGN KEY (`appointment_id`) REFERENCES `appointment` (`appointment_id`);
+```
+
+Modyfikacja tabeli "appointment" - dodanie autoinkrementacji kolumn:
+
+```sql
+ALTER TABLE `appointment`
+  MODIFY `appointment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+```
+
 
 ## Implementacja zapytań SQL
 
@@ -138,7 +177,27 @@ VALUES(16, 'Suplementacja: 5 razy w tygodniu', 5);
 ```
 
 ## Aplikacja
-Tutaj należy opisać aplikację, która wykorzystuje zapytania SQL z poprzedniego kroku. Można, jednak nie jest to konieczne, wrzucić tutaj istotne snippety z Waszych aplikacji.
+
+Aplikacja została zaimplementowana w języku Java. Baza danych została podpięta do aplikacji za pomocą klasy DriverManager, która jest podstawową usługą do zarządzania sterownikami JDBC.
+
+``java
+ Connection conn;
+
+ public boolean open() {
+        try {
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/vet_clinic?useUnicode=true" +
+                    "&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
+
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Couldn't open connection: " + e.getMessage());
+            return false;
+        }
+    }
+```
+
+Utworzono klasy, które bezpośrednio nawiązują do odpowiednich tabeli, poprzez nazwę i adekwatne pola. Wszystkie utworzne klasy, nawiązujące do  znajdują się w osobnej paczce o nazwie "model". Klasa Datasource łączy w sobie wszystkie funkcjonalności oraz zapytania SQL, potrzebne do poprawnego działania aplikacji. 
+
 
 ## Dodatkowe uwagi
 W tej sekcji możecie zawrzeć informacje, których nie jesteście w stanie przypisać do pozostałych. Mogą to być również jakieś komentarze, wolne uwagi, itp.
