@@ -40,6 +40,18 @@ public class Datasource {
     public static final String COLUMN_VETERINARIAN_ADDRESS = "address";
     public static final String COLUMN_VETERINARIAN_PHONE_NUMBER = "phone_number";
 
+    public static final String TABLE_ANIMAL_DIAGNOSIS = "animal_diagnosis";
+    public static final String COLUMN_ANIMAL_DIAGNOSIS_ID = "animal_diagnosis_id";
+    public static final String COLUMN_ANIMAL_DIAGNOSIS_REGIMEN = "regimen";
+    public static final String COLUMN_ANIMAL_DIAGNOSIS_APPOINTMENT_ID = "appointment_id";
+    public static final String COLUMN_ANIMAL_DIAGNOSIS_DIAGNOSIS_ID = "diagnosis_id";
+
+    public static final String TABLE_DRUG_PLAN = "drug_plan";
+    public static final String COLUMN_DRUG_PLAN_ID = "drug_plan_id";
+    public static final String COLUMN_DRUG_PLAN_ADVICES = "advices";
+    public static final String COLUMN_DRUG_PLAN_DRUG_ID = "drug_id";
+    public static final String COLUMN_DRUG_PLAN_DIAGNOSIS_ID = "diagnosis_id";
+
     public static final int ORDER_BY_NONE = 1;
     public static final int ORDER_BY_ASC = 2;
     public static final int ORDER_BY_DESC = 3;
@@ -74,11 +86,19 @@ public class Datasource {
     public static final String INSERT_APPOINTMENT = "INSERT INTO " + TABLE_APPOINTMENT +
             '(' + COLUMN_APPOINTMENT_DATA + ',' + COLUMN_APPOINTMENT_TIME + ',' + COLUMN_APPOINTMENT_VETERINARIAN_ID + "," + COLUMN_APPOINTMENT_ANIMAL_ID + ") VALUES(?,?,?,?)";
 
+    public static final String INSERT_ANIMAL_DIAGNOSIS =
+            "INSERT INTO " + TABLE_ANIMAL_DIAGNOSIS + "(" + COLUMN_ANIMAL_DIAGNOSIS_REGIMEN + ", " + COLUMN_ANIMAL_DIAGNOSIS_APPOINTMENT_ID + ", " + COLUMN_ANIMAL_DIAGNOSIS_DIAGNOSIS_ID + ") VALUES(?,?,?)";
+
+    public static final String INSERT_DRUG_PLAN =
+            "INSERT INTO " + TABLE_DRUG_PLAN + "(" + COLUMN_DRUG_PLAN_DIAGNOSIS_ID + ", " + COLUMN_DRUG_PLAN_ADVICES + ", " + COLUMN_DRUG_PLAN_DRUG_ID + ") VALUES(?,?,?)";
+
     private PreparedStatement insertIntoOwner;
     private PreparedStatement deleteFromOwner;
     private PreparedStatement insertIntoAnimal;
     private PreparedStatement deleteFromAnimal;
     private PreparedStatement insertIntoAppointment;
+    private PreparedStatement insertIntoAnimalDiagnosis;
+    private PreparedStatement insertIntoDrugPlan;
 
     public boolean open() {
         try {
@@ -89,6 +109,8 @@ public class Datasource {
             insertIntoAnimal = conn.prepareStatement(INSERT_ANIMAL);
             deleteFromAnimal = conn.prepareStatement(DELETE_ANIMAL);
             insertIntoAppointment = conn.prepareStatement(INSERT_APPOINTMENT);
+            insertIntoDrugPlan = conn.prepareStatement(INSERT_DRUG_PLAN);
+            insertIntoAnimalDiagnosis = conn.prepareStatement(INSERT_ANIMAL_DIAGNOSIS);
 
             return true;
         } catch (SQLException e) {
@@ -111,10 +133,15 @@ public class Datasource {
             if (deleteFromAnimal != null) {
                 deleteFromAnimal.close();
             }
-            if(insertIntoAppointment != null) {
+            if (insertIntoAppointment != null) {
                 insertIntoAppointment.close();
             }
-
+            if (insertIntoAnimalDiagnosis != null) {
+                insertIntoAnimalDiagnosis.close();
+            }
+            if (insertIntoDrugPlan != null) {
+                insertIntoDrugPlan.close();
+            }
             if (conn != null) {
                 conn.close();
             }
@@ -419,21 +446,21 @@ public class Datasource {
             List<Appointment> appointments = this.queryAppointment(3);
             boolean isAvailable = true;
 
-            for(Appointment appointment : appointments) {
-                if(appointment.getData().equals(date) && (appointment.getTime().getHours() == time.getHours())) {
+            for (Appointment appointment : appointments) {
+                if (appointment.getData().equals(date) && (appointment.getTime().getHours() == time.getHours())) {
                     isAvailable = false;
                 }
             }
 
             if (isAnimal && isVeterinarian && isAvailable) {
-                insertIntoAppointment.setDate(1,date);
-                insertIntoAppointment.setTime(2,time);
-                insertIntoAppointment.setInt(3,veterinarian_id);
-                insertIntoAppointment.setInt(4,animal_id);
+                insertIntoAppointment.setDate(1, date);
+                insertIntoAppointment.setTime(2, time);
+                insertIntoAppointment.setInt(3, veterinarian_id);
+                insertIntoAppointment.setInt(4, animal_id);
 
                 insertIntoAppointment.executeUpdate();
 
-            } else if(!isAvailable) {
+            } else if (!isAvailable) {
                 System.out.println("Nie ma takiego wolnego terminu!");
             } else {
                 System.out.println("Couldn't find animal or veterianrian with that id");
@@ -480,6 +507,30 @@ public class Datasource {
         } catch (SQLException e) {
             System.out.println("Query failed: " + e.getMessage());
             return null;
+        }
+    }
+
+    public void insertAnimalDiagnosis(String regimen, int appointmentId, int diagnosisId) {
+        try {
+            insertIntoAnimalDiagnosis.setString(1, regimen);
+            insertIntoAnimalDiagnosis.setInt(2, appointmentId);
+            insertIntoAnimalDiagnosis.setInt(3, diagnosisId);
+
+            insertIntoAnimalDiagnosis.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void insertDrugPlan(int diagnosisId, String advices, int drugId) {
+        try {
+            insertIntoDrugPlan.setInt(1, diagnosisId);
+            insertIntoDrugPlan.setString(2, advices);
+            insertIntoDrugPlan.setInt(3, drugId);
+
+            insertIntoDrugPlan.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

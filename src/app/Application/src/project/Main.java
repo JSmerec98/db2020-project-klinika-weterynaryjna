@@ -1,10 +1,6 @@
 package project;
 
-import model.*;
-
-import java.sql.Date;
-import java.sql.Time;
-import java.util.List;
+import model.Datasource;
 
 public class Main {
 
@@ -147,7 +143,9 @@ public class Main {
         // 11
 
         // 12
+//        datasource.insertAnimalDiagnosis("Nie robić głupot", 20, 5);
 
         // 13
+//        datasource.insertDrugPlan(1, "Nie wychodzić na długie spacery. Podawać lekkostrawne posiłki.", 1);
     }
 }
