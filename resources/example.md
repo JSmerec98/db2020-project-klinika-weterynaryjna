@@ -196,7 +196,7 @@ Aplikacja została zaimplementowana w języku Java. Baza danych została podpię
     }
 ```
 
-Utworzono klasy, które bezpośrednio nawiązują do odpowiednich tabeli, poprzez nazwę i adekwatne pola. Wszystkie utworzne klasy, nawiązujące do  znajdują się w osobnej paczce o nazwie "model". Klasa Datasource łączy w sobie wszystkie funkcjonalności oraz zapytania SQL, potrzebne do poprawnego działania aplikacji. 
+Utworzono klasy, które bezpośrednio nawiązują do odpowiednich tabeli, poprzez nazwę i adekwatne pola. Wszystkie utworzne klasy, znajdują się w osobnej paczce o nazwie "model". Klasa Datasource łączy w sobie wszystkie funkcjonalności oraz zapytania SQL, potrzebne do poprawnego działania aplikacji. 
 
 
 ## Dodatkowe uwagi
