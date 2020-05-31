@@ -1,17 +1,19 @@
 package model;
 
-public class Owner {
+public class Veterinarian {
 
-    int owner_id;
-    String first_name;
-    String last_name;
-    String address;
-    int phone_number;
+    private int veterinarian_id;
+    private String first_name;
+    private String last_name;
+    private String address;
+    private int phone_number;
 
-    public int getOwner_id() { return owner_id; }
+    public int getVeterinarian_id() {
+        return veterinarian_id;
+    }
 
-    public void setOwner_id(int owner_id) {
-        this.owner_id = owner_id;
+    public void setVeterinarian_id(int veterinarian_id) {
+        this.veterinarian_id = veterinarian_id;
     }
 
     public String getFirst_name() {

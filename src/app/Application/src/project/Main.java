@@ -1,7 +1,10 @@
 package project;
 
-import model.Animal;
-import model.Datasource;
+import model.*;
+
+import java.sql.Date;
+import java.sql.Time;
+import java.util.List;
 
 public class Main {
 
@@ -57,10 +60,10 @@ public class Main {
 //        datasource.deleteFromOwner(30);
 
         // 3
-        //datasource.insertAnimal("Pesto", "Male", new Date(2019,5,12), "Pies", "Kundel", "Zielony", "Brak", 1);
+//        datasource.insertAnimal("Pesto", "Male", new Date((2019-1900),5,12), "Pies", "Kundel", "Zielony", "Brak", 1);
 
         // 4
-        //datasource.deleteFromAnimal("Pesto", 1);
+//        datasource.deleteFromAnimal("Pesto", 1);
 
         // 5
 
@@ -85,19 +88,55 @@ public class Main {
 //        }
 
         // 6
-        Animal animal = datasource.queryAnimalInformation("Barbara", "Warszawska", "Brutus");
-        System.out.println(
-                "ID: " + animal.getAnimal_id() +
-                        " Imię: " + animal.getName() +
-                        " Płeć: " + animal.getSex() +
-                        " Data urodzenia: " + animal.getBirth_date() +
-                        " Gatunek: " + animal.getSpecies() +
-                        " Rasa: " + animal.getBreed() +
-                        " Kolor: " + animal.getColor() +
-                        " Futro: " + animal.getFur() +
-                        " ID właściciela: " + animal.getOwner_id()
-        );
+//        Animal animal = datasource.queryAnimalInformation("Adam", "Piątkowski", "Pesto");
+//        System.out.println(
+//                "ID: " + animal.getAnimal_id() +
+//                        " Imię: " + animal.getName() +
+//                        " Płeć: " + animal.getSex() +
+//                        " Data urodzenia: " + animal.getBirth_date() +
+//                        " Gatunek: " + animal.getSpecies() +
+//                        " Rasa: " + animal.getBreed() +
+//                        " Kolor: " + animal.getColor() +
+//                        " Futro: " + animal.getFur() +
+//                        " ID właściciela: " + animal.getOwner_id());
+
         // 7
+//
+//        Date date = new Date((2019-1900),12,12);
+//        Time time = new Time(16+1,0,0);
+//
+//        datasource.insertAppointment(date,time,3,2);
+
+
+//        List<Veterinarian> veterinarians = datasource.queryVeterinarian(1);
+//        if (veterinarians == null) {
+//            System.out.println("No owners!");
+//            return;
+//        }
+//
+//        for (Veterinarian veterinarian : veterinarians) {
+//            System.out.println(
+//                    "ID: " + veterinarian.getVeterinarian_id() +
+//                            "   Imię: " + veterinarian.getFirst_name() +
+//                            "   Nazwisko: " + veterinarian.getLast_name() +
+//                            "   Adres: " + veterinarian.getAddress() +
+//                            "   Numer telefonu: " + veterinarian.getPhone_number());
+//        }
+
+//        List<Appointment> appointments = datasource.queryAppointment(3);
+//        if (appointments == null) {
+//            System.out.println("No appointments!");
+//            return;
+//        }
+//
+//        for (Appointment appointment : appointments) {
+//            System.out.println(
+//                    "ID: " + appointment.getAppointment_id() +
+//                            "   Data: " + appointment.getData() +
+//                            "   Czas: " + appointment.getTime() +
+//                            "   Zwierze ID: " + appointment.getAnimal_id() +
+//                            "   Weterynarz ID: " + appointment.getVeterinarian_id());
+//        }
 
         // 8
 
