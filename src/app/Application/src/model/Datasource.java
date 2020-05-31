@@ -92,6 +92,31 @@ public class Datasource {
     public static final String INSERT_DRUG_PLAN =
             "INSERT INTO " + TABLE_DRUG_PLAN + "(" + COLUMN_DRUG_PLAN_DIAGNOSIS_ID + ", " + COLUMN_DRUG_PLAN_ADVICES + ", " + COLUMN_DRUG_PLAN_DRUG_ID + ") VALUES(?,?,?)";
 
+    public static final String UPDATE_APPOINTMENT = "UPDATE " + TABLE_APPOINTMENT + " SET " +
+            COLUMN_APPOINTMENT_DATA + " = ?, " + COLUMN_APPOINTMENT_TIME + " = ?" +
+            " WHERE " + COLUMN_APPOINTMENT_DATA + " = ? AND " + COLUMN_APPOINTMENT_TIME + " = ? ";
+
+    public static final String QUERY_APPOINTMENT_FOR_OWNER = "SELECT " + TABLE_OWNER + '.' + COLUMN_OWNER_FIRST_NAME + ", " + TABLE_OWNER + "." + COLUMN_OWNER_LAST_NAME + ", " +
+            TABLE_ANIMAL + "." + COLUMN_ANIMAL_NAME + ", " + TABLE_APPOINTMENT + "." + COLUMN_APPOINTMENT_DATA + ", " + TABLE_APPOINTMENT + "." + COLUMN_APPOINTMENT_TIME +
+            " FROM " + TABLE_ANIMAL + " JOIN " + TABLE_APPOINTMENT + " ON " + TABLE_APPOINTMENT + "." + COLUMN_APPOINTMENT_ANIMAL_ID  + " = " + TABLE_ANIMAL + '.' + COLUMN_ANIMAL_ID +
+            " JOIN " + TABLE_OWNER + " ON " + TABLE_ANIMAL + "." + COLUMN_ANIMAL_OWNER_ID + " = " + TABLE_OWNER + "." + COLUMN_OWNER_ID +
+            " WHERE " + TABLE_OWNER  + "." + COLUMN_OWNER_LAST_NAME + " = \"";
+
+    public static final String QUERY_DIAGNOSIS_FOR_ANIMAL = "SELECT " + TABLE_ANIMAL + "." + COLUMN_ANIMAL_NAME + "," + TABLE_APPOINTMENT + "." + COLUMN_APPOINTMENT_DATA + "," +
+            "diagnosis.name, diagnosis.description FROM " + TABLE_ANIMAL + " INNER JOIN " + TABLE_APPOINTMENT + " ON " + TABLE_ANIMAL + "." + COLUMN_ANIMAL_ID + " = " + TABLE_APPOINTMENT + "." + COLUMN_APPOINTMENT_ANIMAL_ID +
+            " INNER JOIN animal_diagnosis ON " + TABLE_ANIMAL + "." + COLUMN_ANIMAL_ID + " = animal_diagnosis.animal_diagnosis_id " +
+            "INNER JOIN diagnosis ON animal_diagnosis.animal_diagnosis_id = diagnosis.diagnosis_id " +
+            "WHERE " + TABLE_ANIMAL + "." + COLUMN_ANIMAL_NAME + " = \"";
+
+    public static final String QUERY_APPOINTMENT_FOR_VETERINARIAN = "SELECT " + TABLE_APPOINTMENT + "." + COLUMN_APPOINTMENT_DATA + ", " + TABLE_APPOINTMENT + "." + COLUMN_APPOINTMENT_TIME + ", " +
+            TABLE_OWNER + "." + COLUMN_OWNER_FIRST_NAME + ", " + TABLE_OWNER + "." + COLUMN_OWNER_LAST_NAME + ", " + TABLE_ANIMAL + "." + COLUMN_ANIMAL_NAME + ", " +
+            TABLE_ANIMAL + "." + COLUMN_ANIMAL_SPECIES + ", " + TABLE_ANIMAL + "." + COLUMN_ANIMAL_BREED + ", " + TABLE_VETERINARIAN + "." + COLUMN_VETERINARIAN_FIRST_NAME + ", " +
+            TABLE_VETERINARIAN + "." + COLUMN_VETERINARIAN_LAST_NAME + " FROM " + TABLE_OWNER +
+            " INNER JOIN " + TABLE_ANIMAL + " ON " + TABLE_OWNER + "." + COLUMN_OWNER_ID + " = " + TABLE_ANIMAL + "." + COLUMN_ANIMAL_OWNER_ID +
+            " INNER JOIN " + TABLE_APPOINTMENT + " ON " + TABLE_ANIMAL + "." + COLUMN_ANIMAL_ID + " = " + TABLE_APPOINTMENT + "." + COLUMN_APPOINTMENT_ANIMAL_ID +
+            " INNER JOIN " + TABLE_VETERINARIAN + " ON " + TABLE_APPOINTMENT + "." + COLUMN_APPOINTMENT_VETERINARIAN_ID + " = " + TABLE_VETERINARIAN + "." + COLUMN_VETERINARIAN_ID +
+            " WHERE " + TABLE_VETERINARIAN + "." + COLUMN_VETERINARIAN_FIRST_NAME + " = \"";
+
     private PreparedStatement insertIntoOwner;
     private PreparedStatement deleteFromOwner;
     private PreparedStatement insertIntoAnimal;
@@ -99,6 +124,7 @@ public class Datasource {
     private PreparedStatement insertIntoAppointment;
     private PreparedStatement insertIntoAnimalDiagnosis;
     private PreparedStatement insertIntoDrugPlan;
+    private PreparedStatement updateAppointment;
 
     public boolean open() {
         try {
@@ -111,6 +137,7 @@ public class Datasource {
             insertIntoAppointment = conn.prepareStatement(INSERT_APPOINTMENT);
             insertIntoDrugPlan = conn.prepareStatement(INSERT_DRUG_PLAN);
             insertIntoAnimalDiagnosis = conn.prepareStatement(INSERT_ANIMAL_DIAGNOSIS);
+            updateAppointment = conn.prepareStatement(UPDATE_APPOINTMENT);
 
             return true;
         } catch (SQLException e) {
@@ -141,6 +168,9 @@ public class Datasource {
             }
             if (insertIntoDrugPlan != null) {
                 insertIntoDrugPlan.close();
+            }
+            if (updateAppointment != null) {
+                updateAppointment.close();
             }
             if (conn != null) {
                 conn.close();
@@ -471,6 +501,35 @@ public class Datasource {
         }
     }
 
+    public void updateAppointment(Date newDate, Time newTime, Date date, Time time) {
+        try {
+            List<Appointment> appointments = this.queryAppointment(3);
+            boolean isAvailable = true;
+
+            for(Appointment appointment : appointments) {
+                if(appointment.getData().equals(newDate) && (appointment.getTime().getHours() == newTime.getHours())) {
+                    isAvailable = false;
+                }
+            }
+
+            if (isAvailable) {
+                updateAppointment.setDate(1,newDate);
+                updateAppointment.setTime(2,newTime);
+                updateAppointment.setDate(3,date);
+                updateAppointment.setTime(4,time);
+
+                System.out.println(updateAppointment.toString());
+
+                updateAppointment.executeUpdate();
+
+            } else {
+                System.out.println("Nie ma takiego wolnego terminu!");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public Animal queryAnimalInformation(String ownerName, String ownerSurname, String animalName) {
 
         StringBuilder sb = new StringBuilder(QUERY_ANIMAL_INFORMATION_START);
@@ -531,6 +590,104 @@ public class Datasource {
             insertIntoDrugPlan.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    public List<AppointmentForOwner> queryAppointmentForOwner(String last_name) {
+
+        StringBuilder sb = new StringBuilder(QUERY_APPOINTMENT_FOR_OWNER);
+        sb.append(last_name);
+        sb.append("\"");
+
+        try (Statement statement = conn.createStatement();
+             ResultSet resultSet = statement.executeQuery(sb.toString())) {
+
+            List<AppointmentForOwner> appointmentForOwners = new ArrayList<>();
+            while (resultSet.next()) {
+
+                AppointmentForOwner appointmentForOwner = new AppointmentForOwner();
+                appointmentForOwner.setFirst_name(resultSet.getString(1));
+                appointmentForOwner.setLast_name(resultSet.getString(2));
+                appointmentForOwner.setAnmial(resultSet.getString(3));
+                appointmentForOwner.setDate(resultSet.getDate(4));
+                appointmentForOwner.setTime(resultSet.getTime(5));
+
+                appointmentForOwners.add(appointmentForOwner);
+            }
+
+            return appointmentForOwners;
+
+        } catch (SQLException e) {
+            System.out.println("Query failed: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public List<DiagnosisForAnimal> queryDiagnosisForAnimal(String animal_name) {
+
+        StringBuilder sb = new StringBuilder(QUERY_DIAGNOSIS_FOR_ANIMAL);
+        sb.append(animal_name);
+        sb.append("\"");
+
+        try (Statement statement = conn.createStatement();
+             ResultSet resultSet = statement.executeQuery(sb.toString())) {
+
+            List<DiagnosisForAnimal> diagnosisForAnimals = new ArrayList<>();
+            while (resultSet.next()) {
+
+                DiagnosisForAnimal diagnosisForAnimal = new DiagnosisForAnimal();
+                diagnosisForAnimal.setAnimal_name(resultSet.getString(1));
+                diagnosisForAnimal.setData(resultSet.getDate(2));
+                diagnosisForAnimal.setDiagnosis_name(resultSet.getString(3));
+                diagnosisForAnimal.setDescription(resultSet.getString(4));
+
+                diagnosisForAnimals.add(diagnosisForAnimal);
+            }
+
+            return diagnosisForAnimals;
+
+        } catch (SQLException e) {
+            System.out.println("Query failed: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public List<AppointmentForVeterinarian> queryAppointmentForVeterinarian(String first_name,String last_name, Date date) {
+        StringBuilder sb = new StringBuilder(QUERY_APPOINTMENT_FOR_VETERINARIAN);
+        sb.append(first_name);
+        sb.append("\" AND ");
+        sb.append(TABLE_VETERINARIAN + "." + COLUMN_VETERINARIAN_LAST_NAME + " = \"");
+        sb.append(last_name);
+        sb.append("\" AND ");
+        sb.append(TABLE_APPOINTMENT + "." + COLUMN_APPOINTMENT_DATA + " = \"");
+        sb.append(date);
+        sb.append("\"");
+
+        try (Statement statement = conn.createStatement();
+             ResultSet resultSet = statement.executeQuery(sb.toString())) {
+
+            List<AppointmentForVeterinarian> appointmentForVeterinarians = new ArrayList<>();
+            while (resultSet.next()) {
+
+                AppointmentForVeterinarian appointmentForVeterinarian = new AppointmentForVeterinarian();
+                appointmentForVeterinarian.setDate(resultSet.getDate(1));
+                appointmentForVeterinarian.setTime(resultSet.getTime(2));
+                appointmentForVeterinarian.setOwner_first_name(resultSet.getString(3));
+                appointmentForVeterinarian.setOwner_last_name(resultSet.getString(4));
+                appointmentForVeterinarian.setAnimal_name(resultSet.getString(5));
+                appointmentForVeterinarian.setAnimal_species(resultSet.getString(6));
+                appointmentForVeterinarian.setAnimal_breed(resultSet.getString(7));
+                appointmentForVeterinarian.setVeterinarian_first_name(resultSet.getString(8));
+                appointmentForVeterinarian.setVeterinarian_last_name(resultSet.getString(9));
+
+                appointmentForVeterinarians.add(appointmentForVeterinarian);
+            }
+
+            return appointmentForVeterinarians;
+
+        } catch (SQLException e) {
+            System.out.println("Query failed: " + e.getMessage());
+            return null;
         }
     }
 }

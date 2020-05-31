@@ -1,10 +1,15 @@
 package project;
 
+import model.AppointmentForOwner;
+import model.AppointmentForVeterinarian;
 import model.Datasource;
+import model.DiagnosisForAnimal;
+
+import java.sql.Date;
+import java.sql.Time;
+import java.util.List;
 
 public class Main {
-
-    // TODO: 30.05.2020 ZLICZENIE ZWIERZĄTEK
 
     public static void main(String[] args) {
 
@@ -136,16 +141,42 @@ public class Main {
 
         // 8
 
+//        Date newDate = new Date((2020-1900),(2-1),24);
+//        Time newTime = new Time(20+1,0,0);
+//
+//        Date date = new Date((2020-1900),(5-1),6);
+//        Time time = new Time(16+1,0,0);
+//
+//        datasource.updateAppointment(newDate,newTime,date,time);
+
         // 9
+//        List<AppointmentForOwner> appointmentForOwnerList = datasource.queryAppointmentForOwner("Warszawska");
+//
+//        for(AppointmentForOwner appointmentForOwner : appointmentForOwnerList) {
+//            System.out.println(appointmentForOwner.toString());
+//        }
 
         // 10
+//        List<DiagnosisForAnimal> diagnosisForAnimals = datasource.queryDiagnosisForAnimal("Burek");
+//
+//        for(DiagnosisForAnimal diagnosisForAnimal : diagnosisForAnimals) {
+//            System.out.println(diagnosisForAnimal.toString());
+//        }
 
         // 11
 
+//        Date date = new Date(2020-1900,7-1,1);
+//
+//        List<AppointmentForVeterinarian> appointmentForVeterinarians = datasource.queryAppointmentForVeterinarian("Kordian","Kowalski",date);
+//
+//        for(AppointmentForVeterinarian appointmentForVeterinarian : appointmentForVeterinarians) {
+//            System.out.println(appointmentForVeterinarian.toString());
+//        }
+
         // 12
-//        datasource.insertAnimalDiagnosis("Nie robić głupot", 20, 5);
+//        datasource.insertAnimalDiagnosis("Nie ziewać ciągle!", 10, 3);
 
         // 13
-//        datasource.insertDrugPlan(1, "Nie wychodzić na długie spacery. Podawać lekkostrawne posiłki.", 1);
+//        datasource.insertDrugPlan(2, "Nie wychodzić na długie spacery. Podawać lekkostrawne posiłki.", 2);
     }
 }
