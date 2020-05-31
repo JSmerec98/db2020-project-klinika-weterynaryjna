@@ -180,7 +180,7 @@ VALUES(16, 'Suplementacja: 5 razy w tygodniu', 5);
 
 Aplikacja została zaimplementowana w języku Java. Baza danych została podpięta do aplikacji za pomocą klasy DriverManager, która jest podstawową usługą do zarządzania sterownikami JDBC.
 
-``java
+```
  Connection conn;
 
  public boolean open() {
