@@ -195,7 +195,7 @@ public class Datasource {
             }
         }
 
-        System.out.println("SQL Statement = " + sb.toString());
+//        System.out.println("SQL Statement = " + sb.toString());
 
         try (Statement statement = conn.createStatement();
              ResultSet results = statement.executeQuery(sb.toString())) {
@@ -227,9 +227,9 @@ public class Datasource {
             insertIntoOwner.setInt(4, phone);
 
             insertIntoOwner.executeUpdate();
-            System.out.println("Insert ok!");
+            System.out.println("\nDodanie przebiegło pomyślnie!\n");
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("\nNie udało się dodać właściciela!\n");
         }
     }
 
@@ -237,8 +237,9 @@ public class Datasource {
         try {
             deleteFromOwner.setInt(1, id);
             deleteFromOwner.executeUpdate();
+            System.out.println("\nUsunięcie przebiegło pomyślnie\n");
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("\nNie udało się usunąć właściciela!\n");
         }
     }
 
@@ -257,7 +258,7 @@ public class Datasource {
             }
         }
 
-        System.out.println("SQL Statement = " + sb.toString());
+//        System.out.println("SQL Statement = " + sb.toString());
 
         try (Statement statement = conn.createStatement();
              ResultSet results = statement.executeQuery(sb.toString())) {
@@ -308,11 +309,13 @@ public class Datasource {
                 insertIntoAnimal.setInt(8, ownerId);
 
                 insertIntoAnimal.executeUpdate();
+                System.out.println("\nDodanie przebiegło pomyślnie!\n");
             } else {
-                System.out.println("Couldn't find the owner with ID: " + ownerId);
+                System.out.println("Nie udało znaleźć się właściciela o takim ID: " + ownerId);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            System.out.println("\nNie udało się dodać zwierzęcia!\n");
         }
     }
 
@@ -321,8 +324,9 @@ public class Datasource {
             deleteFromAnimal.setString(1, name);
             deleteFromAnimal.setInt(2, ownerId);
             deleteFromAnimal.executeUpdate();
+            System.out.println("\nUsunięcie przebiegło pomyślnie\n");
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("\nNie udało się usunąć zwierzęcia!\n");
         }
     }
 
@@ -344,7 +348,7 @@ public class Datasource {
             }
         }
 
-        System.out.println("SQL Statement = " + sb.toString());
+//        System.out.println("SQL Statement = " + sb.toString());
 
         try (Statement statement = conn.createStatement();
              ResultSet resultSet = statement.executeQuery(sb.toString())) {
@@ -384,7 +388,7 @@ public class Datasource {
             }
         }
 
-        System.out.println("SQL Statement = " + sb.toString());
+//        System.out.println("SQL Statement = " + sb.toString());
 
         try (Statement statement = conn.createStatement();
              ResultSet results = statement.executeQuery(sb.toString())) {
@@ -425,7 +429,7 @@ public class Datasource {
             }
         }
 
-        System.out.println("SQL Statement = " + sb.toString());
+//        System.out.println("SQL Statement = " + sb.toString());
 
         try (Statement statement = conn.createStatement();
              ResultSet results = statement.executeQuery(sb.toString())) {
@@ -489,15 +493,14 @@ public class Datasource {
                 insertIntoAppointment.setInt(4, animal_id);
 
                 insertIntoAppointment.executeUpdate();
-
+                System.out.println("Dodanie wizyty przebiegło pomyślnie!");
             } else if (!isAvailable) {
                 System.out.println("Nie ma takiego wolnego terminu!");
             } else {
-                System.out.println("Couldn't find animal or veterianrian with that id");
+                System.out.println("Nie ma weterynarza lub zwierzęcia o takim ID!");
             }
         } catch (SQLException e) {
-            System.out.println("HALKO");
-            System.out.println(e.getMessage());
+            System.out.println("Nie udało się dodać wizyty!");
         }
     }
 
@@ -518,9 +521,9 @@ public class Datasource {
                 updateAppointment.setDate(3,date);
                 updateAppointment.setTime(4,time);
 
-                System.out.println(updateAppointment.toString());
-
                 updateAppointment.executeUpdate();
+                System.out.println("Modyfikacja wizyty pobiegła pomyślnie!");
+                System.out.println("Nowy termin: " + newDate + " " + newTime);
 
             } else {
                 System.out.println("Nie ma takiego wolnego terminu!");
@@ -542,7 +545,7 @@ public class Datasource {
         sb.append(animalName);
         sb.append("\"");
 
-        System.out.println("SQL Statement = " + sb.toString());
+//        System.out.println("SQL Statement = " + sb.toString());
 
         try (Statement statement = conn.createStatement();
              ResultSet resultSet = statement.executeQuery(sb.toString())) {
@@ -576,8 +579,9 @@ public class Datasource {
             insertIntoAnimalDiagnosis.setInt(3, diagnosisId);
 
             insertIntoAnimalDiagnosis.executeUpdate();
+            System.out.println("Dodanie diagnozy przebiegło pomyślnie!");
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Nie udało się dodać diagnozy!");
         }
     }
 
@@ -588,8 +592,9 @@ public class Datasource {
             insertIntoDrugPlan.setInt(3, drugId);
 
             insertIntoDrugPlan.executeUpdate();
+            System.out.println("Dodanie leku do recepty przebiegło pomyślnie!");
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Nie udało się dodać leku do recepty!");
         }
     }
 

@@ -45,4 +45,15 @@ public class Owner {
     public void setPhone_number(int phone_number) {
         this.phone_number = phone_number;
     }
+
+    @Override
+    public String toString()
+    {
+        return "Właściciel" +
+                "id=" + owner_id +
+                ", imie='" + first_name + '\'' +
+                ", naziwsko='" + last_name + '\'' +
+                ", adres='" + address + '\'' +
+                ", numer telefonu=" + phone_number;
+    }
 }
